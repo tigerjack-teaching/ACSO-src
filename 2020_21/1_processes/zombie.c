@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     if (!fork()) {
       sleep(10);
       /* printf("child\n"); */
-      execl("/bin/ls", "ls", NULL);
+      execlp("ls", "ls", NULL);
     } /* else { */
     /*   printf("father\n"); */
     /* } */

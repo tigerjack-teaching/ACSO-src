@@ -2,12 +2,12 @@
 #include <unistd.h>
 
 int main() {
-  printf("A\n");
+  printf("%d of %d>A\n", getpid(), getppid());
   fork();
-  printf("B\n");
+  printf("%d of %d>B\n", getpid(), getppid());
   fork();
-  printf("C\n");
+  printf("%d of %d>C\n", getpid(), getppid());
   fork();
-  printf("D\n");
+  printf("%d of %d>D\n", getpid(), getppid());
   return 0;
 }

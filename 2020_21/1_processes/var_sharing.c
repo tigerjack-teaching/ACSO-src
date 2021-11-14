@@ -8,7 +8,7 @@ int globalVar; /*  A global variable*/
 
 int main(void) {
   int localVar = 0;
-  int *p = (int *)malloc(2 * sizeof(int));
+  int *p = (int *)malloc(1 * sizeof(int));
   pid_t childPID = fork();
 
   // Putting value at allocated address
@@ -23,10 +23,12 @@ int main(void) {
     globalVar++;
 
     int c = 500;
-    printf("\n [Child] :: localVar = %d, "
-           "globalVar = %d",
-           localVar, globalVar);
-    printf("\n %p %p\n", &globalVar, &localVar);
+    printf("\n [Child] :: localVar address = %p,"
+           " value = %d",
+           &localVar, localVar);
+    printf("\n [Child] :: globalVar address = %p,"
+           " value = %d",
+           &globalVar, globalVar);
     printf("\n [Child] Address of malloced mem child = %p "
            "and value is %d",
            p, *p);
@@ -46,10 +48,11 @@ int main(void) {
 
     localVar = 10;
     globalVar = 20;
-    printf("\n [Parent] :: localVar = %d,"
-           " globalVar = %d",
-           localVar, globalVar);
-    printf("\n %p %p\n", &globalVar, &localVar);
+    printf("\n [Parent] :: localVar address = %p,"
+           " value = %d",
+           &localVar, localVar);
+    printf("\n [Parent] :: globalVar address = %p,"
+           " value = %d", &globalVar, globalVar);
     printf("\n [Parent] Address of malloced mem parent= %p "
            "and value is %d",
            p, *p);
