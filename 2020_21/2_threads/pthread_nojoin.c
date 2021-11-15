@@ -1,3 +1,6 @@
+/**
+ * To show how all the threads die if main thread dies
+ */
 #include <pthread.h>
 #include <stdio.h>
 /* for sleep */
@@ -6,6 +9,7 @@
 void * fun(void * arg) {
   sleep(1);
   printf("exiting fun\n");
+  return NULL;
 }
 
 int main(int argc, char *argv[])

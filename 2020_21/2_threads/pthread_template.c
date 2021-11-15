@@ -1,3 +1,6 @@
+/**
+ * Template for threads usage
+ */
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
