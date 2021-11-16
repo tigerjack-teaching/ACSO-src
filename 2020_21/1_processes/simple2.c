@@ -1,3 +1,8 @@
+/**
+ * Simple code to show the usage of htop with child processes and the output of
+ * the getpid, getppid functions
+
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
