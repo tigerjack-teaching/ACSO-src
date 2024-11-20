@@ -4,66 +4,37 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-int globalVar; /*  A global variable*/
-
+int globalV; /*  A global variable*/
 int main(void) {
-  int localVar = 0;
-  int *p = (int *)malloc(1 * sizeof(int));
+  int stackV = 0;
+  int *heapV = (int *)malloc(2 * sizeof(int));
   pid_t childPID = fork();
-
-  // Putting value at allocated address
-  *p = 0;
-
-  if (childPID == 0) // child process
-  {
-    printf("\n [Child] Initial Value :: localVar"
-           " = %d, globalVar = %d",
-           localVar, globalVar);
-    localVar++;
-    globalVar++;
-
-    int c = 500;
-    printf("\n [Child] :: localVar address = %p,"
-           " value = %d",
-           &localVar, localVar);
-    printf("\n [Child] :: globalVar address = %p,"
-           " value = %d",
-           &globalVar, globalVar);
-    printf("\n [Child] Address of malloced mem child = %p "
-           "and value is %d",
-           p, *p);
-    *p = 50;
-    printf("\n [Child] Address of malloced mem child = %p "
-           "and value is %d",
-           p, *p);
-    *p = 200;
-    printf("\n [Child] Address of malloced mem child = %p "
-           "and value is %d\n\n\n",
-           p, *p);
-  } else // [Parent]
-  {
-    printf("\n [Parent] Initial Value :: "
-           "localVar = %d, globalVar = %d",
-           localVar, globalVar);
-
-    localVar = 10;
-    globalVar = 20;
-    printf("\n [Parent] :: localVar address = %p,"
-           " value = %d",
-           &localVar, localVar);
-    printf("\n [Parent] :: globalVar address = %p,"
-           " value = %d", &globalVar, globalVar);
-    printf("\n [Parent] Address of malloced mem parent= %p "
-           "and value is %d",
-           p, *p);
-    *p = 100;
-    printf("\n [Parent] Address of malloced mem parent= %p "
-           "and value is %d",
-           p, *p);
-    *p = 400;
-    printf("\n [Parent] Address of malloced mem child = %p"
-           " and value is %d \n",
-           p, *p);
+  *heapV = 0;
+  if (childPID == 0) { // child process
+    printf("\n[Child] :: stackV = %d, globalV = %d", stackV, globalV);
+    stackV++;
+    globalV++;
+    printf("\n[Child] :: stackV = %d, globalV = %d", stackV, globalV);
+    printf("\n[Child] :: heapV :: address = %p, value = %d", heapV, *heapV);
+    *heapV = 50;
+    printf("\n[Child] :: heapV :: address = %p, value = %d", heapV, *heapV);
+    *heapV = 200;
+    printf("\n[Child] :: heapV :: address = %p, value = %d", heapV, *heapV);
+    int *heapV2 = (int *)malloc(2 * sizeof(int));
+    printf("\n[Child] :: heapV2 :: address = %p", heapV2);
+  } else { // Parent process
+    printf("\n[Parent] :: stackV = %d, globalV = %d", stackV, globalV);
+    stackV = 10;
+    globalV = 20;
+    printf("\n[Parent] :: stackV = %d, globalV = %d", stackV, globalV);
+    printf("\n[Parent] :: heapV :: address = %p, value = %d", heapV, *heapV);
+    *heapV = 100;
+    printf("\n[Parent] :: heapV :: address = %p, value = %d", heapV, *heapV);
+    *heapV = 400;
+    printf("\n[Parent] :: heapV :: address = %p, value = %d", heapV, *heapV);
+    int *heapV2 = (int *)malloc(3 * sizeof(int));
+    *heapV2 = 3;
+    printf("\n[Parent] :: heapV2 :: address = %p", heapV2);
   }
   return 0;
 }
