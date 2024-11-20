@@ -9,5 +9,6 @@ int main() {
   printf("%d of %d>C\n", getpid(), getppid());
   fork();
   printf("%d of %d>D\n", getpid(), getppid());
+  sleep(100);
   return 0;
 }
