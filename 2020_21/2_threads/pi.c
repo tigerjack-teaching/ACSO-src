@@ -32,22 +32,22 @@ void *check_points(void *data) {
   unsigned int num_points_per_thread =
       num_points / num_threads + (index < num_points % num_threads ? 1 : 0);
   unsigned int i;
-  unsigned int local_count = 0;
+  unsigned int local_inside_circle = 0;
   /* The core of the application */
   for (i = 0; i < num_points_per_thread; i++) {
     double x = (double)rand_r(&seed) / (double)RAND_MAX;
     double y = (double)rand_r(&seed) / (double)RAND_MAX;
     fprintf(stdout, "Thread %d - Point %f %f\n", index, x, y);
     if (x * x + y * y <= 1)
-      local_count++;
+      local_inside_circle++;
   }
-  fprintf(stdout, "Thread %d - Inside points %d/%d\n", index, local_count,
+  fprintf(stdout, "Thread %d - Inside points %d/%d\n", index, local_inside_circle,
          num_points_per_thread);
   fflush(stdout);
 
   /* Lock and update global result */
   pthread_mutex_lock(&mutex);
-  inside_points += local_count;
+  inside_points += local_inside_circle;
   pthread_mutex_unlock(&mutex);
   return 0;
 }
@@ -72,7 +72,7 @@ void resume_stdout(int fd) {
   close(fd);
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
   if (argc != 3) {
     fprintf(stdout, "Wrong number of parameters\n");
     return 0;
